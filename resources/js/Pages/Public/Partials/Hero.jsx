@@ -23,7 +23,7 @@ const Hero = () => {
             
           </p>
           <a
-            href="#"
+            href={`tel:+38161 6493939`}
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded transition"
           >
             Pozovi
