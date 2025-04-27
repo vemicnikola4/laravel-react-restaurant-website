@@ -30,7 +30,7 @@ const AboutUs = () => {
               <p className="text-sm">Visoka 4.7 ocena na Goole recenzijama svedoči o našoj posvećenosti</p>
             </div>
             <div className='flex flex-col gap-4'>
-              <h4 className="font-semibold text-xl text-yellow-600">Svaki obrog pripremljen sa pažnjom</h4>
+              <h4 className="font-semibold text-xl text-yellow-600">Svaki obrok pripremljen sa pažnjom</h4>
               <p className="text-sm">Pripremamo girose kao i prvog dana</p>
             </div>
           </div>
