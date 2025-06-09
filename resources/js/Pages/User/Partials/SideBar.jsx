@@ -5,7 +5,6 @@ import { useState } from "react";
 const SideBar = () => {
     const [pageSetingsShow, setPageSetingsShow] = useState(true);
     const { locale, translate, theme, setTheme,styling,fontFamily,setFontFamily} = usePageContext();
-    const[showSideBar,setShowBar] = useState(false);
 
     
     return <div className={"flex flex-col w-full h-full pt-16 px-4 z-50 " + styling.sideBar.main[theme]}>

@@ -102,7 +102,7 @@ export default function Hero() {
                 {/* mobile nav */}
                 {
                     showMobileMenu &&
-                    <div className="flex flex-col gap-2 items-start-ps-2 py-2 mt-4">
+                    <div className="md:hidden flex flex-col gap-2 items-start-ps-2 py-2 mt-4">
                         <a onClick={() => scrollToSection("about")} className=" hover:cursor-pointer">{locale == 'en' ? 'About Us' : translate['About Us']}</a>
                         <a onClick={() => scrollToSection("menu")} className=" hover:cursor-pointer">{locale == 'en' ? 'Menu' : translate['Menu']}</a>
                         <a onClick={() => scrollToSection("location")} className=" hover:cursor-pointer">{locale == 'en' ? 'Location' : translate['Location']}</a>

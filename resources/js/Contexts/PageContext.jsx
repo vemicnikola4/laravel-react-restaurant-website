@@ -10,18 +10,17 @@ export const PageProvider = ({ children }) => {
     hero: null,
     // other data...
   });
-  const [locale, setLocale] = useState();
+  const [locale, setLocale] = useState(localStorage.getItem('locale') || 'sr');
   const [theme, setTheme] = useState('dark');
   const [fontFamily, setFontFamily] = useState('font-sans');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const onSetLocaleClick = (value) => {
-    setLocale(value);
-    localStorage.setItem('locale', value);
-  }
+
 
   const translate = {
-    'Value not valid!':'Uneta vrednost nije dozvoljena!',
+    'With no image': 'Bez slike',
+    'With image': 'Sa slikom',
+    'Value not valid!': 'Uneta vrednost nije dozvoljena!',
     'Enter title': 'Unesi naslov',
     'Enter description': 'Unesi opis',
     'Choose menu position': 'Izaberi položaj menija',
@@ -107,12 +106,14 @@ export const PageProvider = ({ children }) => {
     "The subtitle field must be at least 2 characters.": "Podnaslov mora imati najmanje 2 slova!",
     "The description field is required.": "Polje opis je obavezan!",
     "The description field must be a string.": "Polje opis mora biti sastavljen od slova!",
-    "The description field must be at least 2 characters.": "Polje opis mora imati najmanje 2 slova!",
+    "The description field must be at least 5 characters.": "Polje opis mora imati najmanje 5 slova!",
     "The media field is required.": "Molim učitajte sliku!",
     "The media field must be an image.": "Fajl mora biti slika!",
     "Extentions allowed:jpg,jpeg,png,gif,webp.": "Dozvoljene ektenzije:jpg,jpeg,png,gif,webp",
     "Field required. Values allowed:center,left,right.": "Obavezno polje. Dozvoljene vrednosti:centralno,levo,desno.",
     "Ups something went wrong. Try again.": "Ups greška, probajte ponovo!",
+    "This section is the About Us section. Enter a title, for example: About Us, Welcome on behalf of the business, etc. Enter a description with some basic information you'd like to highlight about your business. You can also choose whether or not to include an image in this section.":" Ova sekcija je sekcija O nama. Unesite naslov, na primer: O nama, Dobrodošli u ime biznisa isl. Unesite opis, neke osnovne podatke koje želite da istaknete o vašem biznisu. Takodje možete izabrati da li želite sliku u ovoj sekciji ili ne.`",
+    'Click for instruction':'Kliknite za uputstva',
   };
   const cities = ["Ada", "Aleksandrovac", "Aleksinac", "Alibunar", "Apatin", "Aranđelovac", "Arilje", "Babušnica", "Bajina Bašta", "Barajevo",
     "Batočina", "Bač", "Bačka Palanka", "Bačka Topola", "Bački Petrovac", "Bela Palanka", "Bela Crkva", "Beočin", "Bečej",
@@ -296,11 +297,19 @@ export const PageProvider = ({ children }) => {
         dark: ' bg-gray-700 bg-opacity-50  text-white ',
       }
     },
-    hamburgerButton:{
+    hamburgerButton: {
       light: ' bg-gray-700 bg-opacity-50   ',
       dark: ' bg-gray-100 bg-opacity-50   ',
+    },
+    aboutUs: {
+      light: ' bg-gray-100 bg-opacity-50   ',
+      dark: ' bg-gray-700 bg-opacity-50   ',
+    },
+    input: {
+      light: ' bg-gray-100  text-gray-700  ',
+      dark: ' bg-gray-700  text-white ',
     }
-    }
+  }
   const positioning = {
     hero: {
       navBar: {
@@ -326,14 +335,14 @@ export const PageProvider = ({ children }) => {
     }
   }
   function isString(value) {
-        if (typeof value === 'string') {
-            return true;
-        } else {
-            return false;
-        }
+    if (typeof value === 'string') {
+      return true;
+    } else {
+      return false;
     }
+  }
   return (
-    <PageContext.Provider value={{ pageData, setPageData, locale, setLocale, onSetLocaleClick, translate, cities, tagsEn, tagsSr, titleValidation, tagsValidation, cityValidation, styling, theme, setTheme, fontFamily, setFontFamily, positioning,isMobileMenuOpen,setIsMobileMenuOpen,locale,isString }}>
+    <PageContext.Provider value={{ pageData, setPageData, locale, setLocale, translate, cities, tagsEn, tagsSr, titleValidation, tagsValidation, cityValidation, styling, theme, setTheme, fontFamily, setFontFamily, positioning, isMobileMenuOpen, setIsMobileMenuOpen, locale, isString }}>
       {children}
     </PageContext.Provider>
   );

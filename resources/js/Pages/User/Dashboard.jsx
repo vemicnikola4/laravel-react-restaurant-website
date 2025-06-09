@@ -5,8 +5,9 @@ import SideBar from './Partials/SideBar';
 import { useEffect, useState } from 'react';
 import Hero from './Partials/Hero';
 import HamburgerButton from '@/Components/HamburgerButton';
+import AboutUs from './Partials/AboutUs';
 export default function Dashboard({ page }) {
-    const { locale, setLocale, translate, fontFamily, theme, styling, isMobileMenuOpen,setIsMobileMenuOpen } = usePageContext();
+    const { locale, setLocale, translate, fontFamily, theme, styling, isMobileMenuOpen, setIsMobileMenuOpen } = usePageContext();
     const [isOpen, setIsOpen] = useState(false);
     const [showMobileSideBar, setShowMobileSedeBar] = useState(false);
     const hero = {
@@ -32,8 +33,8 @@ export default function Dashboard({ page }) {
                 <div className={"flex min-h-screen relative m-0 "} >
                     <Head title="Dashboard" />
                     {/* toggle side menu mobile button */}
-                    <HamburgerButton className={'  absolute top-2 left-4 z-50  ' + styling.hamburgerButton[theme] } fcn={showMobileSideBar} setFcn={setShowMobileSedeBar} />
-                    {showMobileSideBar && 
+                    <HamburgerButton className={'  absolute top-2 left-4 z-50  ' + styling.hamburgerButton[theme]} fcn={showMobileSideBar} setFcn={setShowMobileSedeBar} />
+                    {showMobileSideBar &&
                         <div className={'md:hidden absolute top-0 bottom-0 left-0 right-0 shadow-[2px_0_10px_rgba(0,0,0,0.3)] z-20'}>
                             <SideBar />
                         </div>
@@ -44,6 +45,8 @@ export default function Dashboard({ page }) {
                     </div>
                     <div className="flex flex-col w-full relative md:basis-3/4">
                         <Hero hero={hero} />
+                        <AboutUs />
+
                     </div>
                 </div>
 

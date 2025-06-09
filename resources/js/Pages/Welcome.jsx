@@ -14,20 +14,16 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             ?.classList.add('!flex-row');
         document.getElementById('background')?.classList.add('!hidden');
     };
-    const { locale,setLocale,translate,onSetLocaleClick} = usePageContext();
+    const { locale,setLocale,translate} = usePageContext();
 
-
-   
+     const onSetLocaleClick = (value) => {
+    setLocale(value);
+  }
     useEffect(() => {
-        if (localStorage.getItem('locale')) {
-            setLocale(localStorage.getItem('locale'));
-        } else {
-            setLocale('sr');
+            localStorage.setItem('locale', locale);
 
-        }
 
-    }, []);
-
+    }, [locale]);
     return (
         <div>
             <div className="relative bg-cover bg-center bg-no-repeat h-screen text-white"
