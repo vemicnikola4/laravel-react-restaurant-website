@@ -1,6 +1,5 @@
-import { PageProvider, usePageContext } from '@/Contexts/PageContext';
-import { Head, Link } from '@inertiajs/react';
-import { Globals } from '@/Globals';
+import {usePageContext } from '@/Contexts/PageContext';
+import {Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import LocaleDiv from '@/Components/LocaleDiv';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -15,24 +14,16 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             ?.classList.add('!flex-row');
         document.getElementById('background')?.classList.add('!hidden');
     };
-    const [locale, setLocale] = useState();
+    const { locale,setLocale,translate} = usePageContext();
 
-    const onSetLocaleClick = (value) => {
-        setLocale(value);
-        localStorage.setItem('locale', value);
-    }
+     const onSetLocaleClick = (value) => {
+    setLocale(value);
+  }
     useEffect(() => {
-        if (localStorage.getItem('locale')) {
-            setLocale(localStorage.getItem('locale'));
-        } else {
-            setLocale('sr');
+            localStorage.setItem('locale', locale);
 
-        }
 
-    }, []);
-    const translate = Globals.translate;
-    const cities = Globals.cities;
-
+    }, [locale]);
     return (
         <div>
             <div className="relative bg-cover bg-center bg-no-repeat h-screen text-white"

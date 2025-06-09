@@ -7,6 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import Tag from '@/Components/Tag';
 import CreateButton from '@/Components/CreateButton';
 import InputError from '@/Components/InputError';
+import { usePageContext } from '@/Contexts/PageContext';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const handleImageError = () => {
@@ -19,7 +20,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             ?.classList.add('!flex-row');
         document.getElementById('background')?.classList.add('!hidden');
     };
-    const [locale, setLocale] = useState();
+      const { translate, cities, tagsEn, tagsSr, titleValidation, tagsValidation,cityValidation,locale, setLocale} = usePageContext();
+    
     const errors = usePage().props.errors;
     const user = usePage().props.auth.user;
 
@@ -51,13 +53,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         }
 
     }, []);
-    const translate = Globals.translate;
-    const cities = Globals.cities;
-    const tagsEn = Globals.tagsEn;
-    const tagsSr = Globals.tagsSr;
-    const titleValidation = Globals.titleValidation;
-    const cityValidation = Globals.cityValidation;
-    const tagsValidation = Globals.tagsValidation;
+   
 
     const [selectedTags, setSelectedTags] = useState([]);
 
