@@ -12,7 +12,7 @@ export default function Hero() {
         media: '',
         textBoxPosition:'left'
     })
-    const { locale, setLocale, translate, fontFamily, theme, styling, positioning,isMobileMenuOpen,isString } = usePageContext();
+    const { locale, setLocale, translate, fontFamily, theme, styling, positioning,isMobileMenuOpen, validateTitle,validateDescription,validateImage } = usePageContext();
     const [navBarPosition, setNavBarPosition] = useState('center');
     const[showMobileMenu,setShowMobileMenu] = useState(false);
     const [frontErrors, setFrontErrors] = useState({
@@ -34,35 +34,11 @@ export default function Hero() {
             tBPError = '';
         }
 
-        if (!isString(hero.title)) {
-            tError = 'The title field must be a string.';
+        tError = validateTitle(hero.title);
+        sError =validateDescription(hero.subtitle);
+        mError =validateImage(hero.media);
 
-        } else if (hero.title.length < 2) {
-            tError = 'The title field must be at least 2 characters.';
-        } else {
-            tError = '';
-
-        }
-        if (!isString(hero.subtitle)) {
-            sError = 'The subtitle field must be a string.';
-
-        } else if (hero.subtitle.length < 2) {
-            sError = 'The subtitle field must be at least 2 characters.';
-        } else {
-            sError = '';
-
-        }
-        const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
-       
-        if (hero.media instanceof File) { // Check if it is an instance of File
-            if (!allowedImageTypes.includes(hero.media.type)) {
-                mError = 'Extentions allowed:jpg,jpeg,png,gif,webp.';
-            }
-        } else {
-            mError = 'The media field must be an image.';
-
-        }
+        
         setFrontErrors({
             title: tError,
             subtitle: sError,

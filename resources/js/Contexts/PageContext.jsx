@@ -16,12 +16,16 @@ export const PageProvider = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 
-
   const translate = {
+    'Add item': "Dodaj artikl",
+    'Add a section with item images': 'Dodaj sekciju sa slikama artikala',
+    'Add a section with no item images': 'Dodaj sekciju bez slika artikala',
     'With no image': 'Bez slike',
     'With image': 'Sa slikom',
     'Value not valid!': 'Uneta vrednost nije dozvoljena!',
+    'Value not valid! Must be a number greater than zero.' :'Uneta vrednost nije dozvoljena. Mora biti broj veći od 0.',
     'Enter title': 'Unesi naslov',
+    "Enter item price": 'Unesi cenu',
     'Enter description': 'Unesi opis',
     'Choose menu position': 'Izaberi položaj menija',
     'Choose box position': 'Izaberi položaj sekcije',
@@ -112,8 +116,9 @@ export const PageProvider = ({ children }) => {
     "Extentions allowed:jpg,jpeg,png,gif,webp.": "Dozvoljene ektenzije:jpg,jpeg,png,gif,webp",
     "Field required. Values allowed:center,left,right.": "Obavezno polje. Dozvoljene vrednosti:centralno,levo,desno.",
     "Ups something went wrong. Try again.": "Ups greška, probajte ponovo!",
-    "This section is the About Us section. Enter a title, for example: About Us, Welcome on behalf of the business, etc. Enter a description with some basic information you'd like to highlight about your business. You can also choose whether or not to include an image in this section.":" Ova sekcija je sekcija O nama. Unesite naslov, na primer: O nama, Dobrodošli u ime biznisa isl. Unesite opis, neke osnovne podatke koje želite da istaknete o vašem biznisu. Takodje možete izabrati da li želite sliku u ovoj sekciji ili ne.`",
-    'Click for instruction':'Kliknite za uputstva',
+    "This section is the About Us section. Enter a title, for example: About Us, Welcome on behalf of the business, etc. Enter a description with some basic information you'd like to highlight about your business. You can also choose whether or not to include an image in this section.": " Ova sekcija je sekcija O nama. Unesite naslov, na primer: O nama, Dobrodošli u ime biznisa isl. Unesite opis, neke osnovne podatke koje želite da istaknete o vašem biznisu. Takodje možete izabrati da li želite sliku u ovoj sekciji ili ne.`",
+    'Click for instruction': 'Kliknite za uputstva',
+    "This section is intended for items on your menu. The Add Section button adds a menu section, and the Add Item button adds an individual item. In the Section Title field, you can enter names such as Starters, Main Courses, Desserts, etc.": "Ova sekcija je namenjena za artikle vašeg menija. Na dodaj sekciju dugme dodaje se jedna sekcija menija. A na dodaj artikal dugme dodaje se pojedinačni artikal. U polje Naslov sekcije dodajete npr. Predjela, Glavna jela, Deserti isl."
   };
   const cities = ["Ada", "Aleksandrovac", "Aleksinac", "Alibunar", "Apatin", "Aranđelovac", "Arilje", "Babušnica", "Bajina Bašta", "Barajevo",
     "Batočina", "Bač", "Bačka Palanka", "Bačka Topola", "Bački Petrovac", "Bela Palanka", "Bela Crkva", "Beočin", "Bečej",
@@ -230,6 +235,53 @@ export const PageProvider = ({ children }) => {
     "Veganska",
     "Vegetarijanska"
   ];
+
+
+  //  Validations
+  const validateTitle = (title) => {
+    if (!isString(title)) {
+      return 'The title field must be a string.';
+
+    } else if (title.length < 2) {
+      return 'The title field must be at least 2 characters.';
+    } else {
+      return '';
+
+    }
+  }
+  const validateDescription = (description) => {
+    if (!isString(description)) {
+      return 'The description field must be a string.';
+
+    } else if (description.length < 5) {
+      return "The description field must be at least 5 characters.";
+    } else {
+      return '';
+
+    }
+  }
+  const validateImage = (image) => {
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+
+    if (image instanceof File) { // Check if it is an instance of File
+      if (!allowedImageTypes.includes(image.type)) {
+        return 'Extentions allowed:jpg,jpeg,png,gif,webp.';
+      } else {
+        return '';
+      }
+    } else {
+      return 'The media field must be an image.';
+
+    }
+  }
+  const validatePrice = (price)=>{
+    if ( !isValidNumber(price)){
+      return 'Value not valid! Must be a number greater than zero.';
+    }else {
+        return '';
+      }
+  }
   function titleValidation(value) {
     return typeof value === 'string' && value.trim() !== '';
   };
@@ -260,8 +312,8 @@ export const PageProvider = ({ children }) => {
         dark: 'bg-gray-700 text-white '
       },
       input: {
-        light: ' bg-gray-100 bg-opacity-50 border-b-1 text-gray-700  ',
-        dark: ' bg-gray-700 bg-opacity-50  text-white ',
+        light: ' bg-gray-100  text-gray-700 rounded-sm ',
+        dark: ' bg-gray-700   text-white rounded-sm ',
       },
 
     },
@@ -302,12 +354,16 @@ export const PageProvider = ({ children }) => {
       dark: ' bg-gray-100 bg-opacity-50   ',
     },
     aboutUs: {
-      light: ' bg-gray-100 bg-opacity-50   ',
+      light: ' bg-gray-200 bg-opacity-50   ',
       dark: ' bg-gray-700 bg-opacity-50   ',
     },
+    menu: {
+      light: ' bg-gray-100 bg-opacity-50   ',
+      dark: ' bg-gray-500 bg-opacity-50   ',
+    },
     input: {
-      light: ' bg-gray-100  text-gray-700  ',
-      dark: ' bg-gray-700  text-white ',
+      light: ' bg-gray-100  text-gray-700 rounded-sm ',
+      dark: ' bg-gray-400  text-white rounded-sm ',
     }
   }
   const positioning = {
@@ -341,8 +397,11 @@ export const PageProvider = ({ children }) => {
       return false;
     }
   }
+  function isValidNumber(value) {
+    return value !== '' && !isNaN(value) && Number(value) > 0;
+  }
   return (
-    <PageContext.Provider value={{ pageData, setPageData, locale, setLocale, translate, cities, tagsEn, tagsSr, titleValidation, tagsValidation, cityValidation, styling, theme, setTheme, fontFamily, setFontFamily, positioning, isMobileMenuOpen, setIsMobileMenuOpen, locale, isString }}>
+    <PageContext.Provider value={{ pageData, setPageData, locale, setLocale, translate, cities, tagsEn, tagsSr, titleValidation, tagsValidation, cityValidation, styling, theme, setTheme, fontFamily, setFontFamily, positioning, isMobileMenuOpen, setIsMobileMenuOpen, locale, isString, validateTitle, validateDescription, validateImage,validatePrice }}>
       {children}
     </PageContext.Provider>
   );

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Hero from './Partials/Hero';
 import HamburgerButton from '@/Components/HamburgerButton';
 import AboutUs from './Partials/AboutUs';
+import Menu from './Partials/Menu';
 export default function Dashboard({ page }) {
     const { locale, setLocale, translate, fontFamily, theme, styling, isMobileMenuOpen, setIsMobileMenuOpen } = usePageContext();
     const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +47,7 @@ export default function Dashboard({ page }) {
                     <div className="flex flex-col w-full relative md:basis-3/4">
                         <Hero hero={hero} />
                         <AboutUs />
+                        <Menu />
 
                     </div>
                 </div>
