@@ -20,7 +20,7 @@ export default function AboutUs() {
         description: '',
         media: '',
     })
-    const { locale, setLocale, translate, fontFamily, theme, styling, positioning, isMobileMenuOpen, isString } = usePageContext();
+    const { locale, setLocale, translate, fontFamily, theme, styling, positioning, isMobileMenuOpen, validateTitle,validateDescription,validateImage } = usePageContext();
 
     const mainDivOnClick = ()=>{
         if ( seeInstructions ){
@@ -32,38 +32,10 @@ export default function AboutUs() {
         let dError = '';
         let mError = '';
 
-        if (!isString(aboutUs.title)) {
-            tError = 'The title field must be a string.';
-
-        } else if (aboutUs.title.length < 2) {
-            tError = 'The title field must be at least 2 characters.';
-        } else {
-            tError = '';
-
-        }
-        if (!isString(aboutUs.description)) {
-            dError = 'The description field must be a string.';
-
-        } else if (aboutUs.description.length < 5) {
-            dError = "The description field must be at least 5 characters.";
-        } else {
-            dError = '';
-
-        }
+        tError = validateTitle(aboutUs.title);
+        dError=validateDescription(aboutUs.description);
         if (hasImage) {
-            const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
-
-            if (aboutUs.media instanceof File) { // Check if it is an instance of File
-                if (!allowedImageTypes.includes(aboutUs.media.type)) {
-                    mError = 'Extentions allowed:jpg,jpeg,png,gif,webp.';
-                }else{
-                    mError = '';
-                }
-            } else {
-                mError = 'The media field must be an image.';
-
-            }
+            mError =validateImage(aboutUs.media);
         }else{
             mError = '';
         }
@@ -90,7 +62,7 @@ export default function AboutUs() {
     },[hasImage]);
 
     return <div className={"flex flex-col py-6 px-4  h-fit  relative " + styling.aboutUs[theme]} onClick={e=>mainDivOnClick()}>
-        <div className={seeInstructions ? '  absolute left-2 w-full md:w-2/3  bg-gray-100 rounded-sm  p-2 text-gray-700 text-sm md:text-lg z-10 ' : '  hidden '}>
+        <div className={seeInstructions ? '  absolute left-0 md:left-2 w-full md:w-2/3  bg-gray-100 rounded-sm  p-2 text-gray-700 text-sm md:text-lg z-10 ' : '  hidden '}>
             {locale == 'en' ? "This section is the About Us section. Enter a title, for example: About Us, Welcome on behalf of the business, etc. Enter a description with some basic information you'd like to highlight about your business. You can also choose whether or not to include an image in this section." : translate["This section is the About Us section. Enter a title, for example: About Us, Welcome on behalf of the business, etc. Enter a description with some basic information you'd like to highlight about your business. You can also choose whether or not to include an image in this section."]}
         </div>
         {
